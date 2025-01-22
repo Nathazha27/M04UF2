@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<title>Hueveras de Cartón 2</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.87.0/phaser.min.js"></script>
+		<script>
+let config = {
+	width:800,
+	height:450,
+	scene: {
+		preload: precarga,
+		create: crea,
+		uptade: actualiza
+	}
+};
+
+let game = new Phaser.Game(config);
+
+let rect;
+
+let rect_dir = 1;
+
+function precarga()
+{
+
+}
+
+function crea()
+{
+	rect = this.add.rectangle(400, 225, 32, 32, 0xffffff);	
+}
+
+function actualiza()
+{
+	rect.x += rect_dir;
+
+	if (rect.x <= 0 || rect.x >=canvas_w){
+		rect_dir = -rect_dir;
+	}
+}
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>
+
