@@ -5,21 +5,25 @@
 		<title>Hueveras de Cartón 2</title>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/phaser/3.87.0/phaser.min.js"></script>
 		<script>
+let canvas_w = 800;
+let canvas_h =450;
+let rect_dir = 1;
+
 let config = {
-	width:800,
-	height:450,
+	width:canvas_w,
+	height:canvas_h,
 	scene: {
 		preload: precarga,
 		create: crea,
-		uptade: actualiza
+		update: actualiza
 	}
 };
 
-let game = new Phaser.Game(config);
+let game = new Phaser.Game(config)
 
-let rect;
+let rect
 
-let rect_dir = 1;
+let tecla;
 
 function precarga()
 {
@@ -29,15 +33,43 @@ function precarga()
 function crea()
 {
 	rect = this.add.rectangle(400, 225, 32, 32, 0xffffff);	
+	tecla = this.input.keyboard.createCursorKeys();
 }
 
 function actualiza()
 {
-	rect.x += rect_dir;
-
-	if (rect.x <= 0 || rect.x >=canvas_w){
-		rect_dir = -rect_dir;
+	if (tecla.left.isDown){
+	rect.x -= rect_dir;
 	}
+
+	if (tecla.right.isDown){
+	rect.x += rect_dir;
+	}
+
+	if (tecla.up.isDown) {
+	rect.y -= rect_dir;
+	}
+
+	if (tecla.down.isDown){
+	rect.y += rect_dir;
+	}
+
+	if (rect.x >= 800) {
+	rect.x -= rect_dir;
+	}
+
+	if (rect.x <= 0){
+	rect.x += rect_dir;
+	}
+
+	if (rect.y >= 450){
+	rect.y -= rect_dir;
+	}
+
+	if (rect.y <= 0){
+	rect.y += rect_dir;
+	}
+
 }
 		</script>
 	</head>
