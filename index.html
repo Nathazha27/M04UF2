@@ -7,7 +7,7 @@
 		<script>
 let canvas_w = 800;
 let canvas_h =450;
-let rect_dir = 1;
+//let rect_dir = 5;
 
 let config = {
 	width:canvas_w,
@@ -21,24 +21,38 @@ let config = {
 
 let game = new Phaser.Game(config)
 
-let rect
+//let rect
 
-let tecla;
+//let tecla;
+
+let huevera_b, huevera_m, huevera_d;
+let huevo_b, huevo_m, huevo_d;
 
 function precarga()
 {
-
+	this.load.image('huevera', 'huevera.png');
+	this.load.image('huevo', 'huevo.png');
 }
 
 function crea()
 {
-	rect = this.add.rectangle(400, 225, 32, 32, 0xffffff);	
+	/*rect = this.add.rectangle(400, 225, 32, 32, 0xffffff);*/	
 	tecla = this.input.keyboard.createCursorKeys();
+
+	huevera_b = this.add.image(400,100, 'huevera');
+	huevera_b.setScale(.5);
+	huevo_b = this.add.image(400,225, 'huevo');
+	huevo_b.setScale(.5);	
+	/*huevo_b.setTint(Phaser.Display.Color.GetColor(255,255,255));*/
+	
+	huevera_m = this.add.image(200,100, 'huevera');
+	huevera_m.setScale(.5);
+	huevera_m.setTint(Phaser.Display.Color.GetColor(192, 128, 16));
 }
 
 function actualiza()
 {
-	if (tecla.left.isDown){
+/*	if (tecla.left.isDown){
 	rect.x -= rect_dir;
 	}
 
@@ -54,22 +68,22 @@ function actualiza()
 	rect.y += rect_dir;
 	}
 
-	if (rect.x >= 800) {
-	rect.x -= rect_dir;
+	if (rect.x >= canvas_w) {
+	rect.x = canvas_w;
 	}
 
 	if (rect.x <= 0){
-	rect.x += rect_dir;
+	rect.x = 0;
 	}
 
-	if (rect.y >= 450){
-	rect.y -= rect_dir;
+	if (rect.y >= canvas_h){
+	rect.y = canvas_h;
 	}
 
 	if (rect.y <= 0){
-	rect.y += rect_dir;
+	rect.y = 0;
 	}
-
+*/
 }
 		</script>
 	</head>
