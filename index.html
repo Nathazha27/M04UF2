@@ -12,6 +12,13 @@ let canvas_h =450;
 let config = {
 	width:canvas_w,
 	height:canvas_h,
+	physics: {
+		default: "arcade",
+		arcade: {
+			gravity: {
+				y: 150}
+			}
+		},
 	scene: {
 		preload: precarga,
 		create: crea,
@@ -61,10 +68,10 @@ function crea()
 	huevera_a.setScale(huevera_scale);
 	huevera_a.setTint(Phaser.Display.Color.GetColor(131,222,255));
 
-	let timer = this.time.addEvent({
-		delay: 500,
+	this.time.addEvent({
+		delay: 2000,
 		callback: crearHuevo,
-		callbackScope: crearHuevo,
+		callbackScope: this,
 		loop: true,
 	})
 }
@@ -82,6 +89,8 @@ function crearHuevo() {
 	else if (huevo_random == 1){
 		huevo.setTint(Phaser.Display.Color.GetColor(131,222,255));
 	}
+
+	this.physics.world.enable(huevo);
 		
 	huevo.setInteractive({draggable:true});
 		huevo.on('pointerdown', function () {
@@ -93,6 +102,8 @@ function crearHuevo() {
 		this.input.on('drag', function (pointer, object, x, y) {
 			object.x = x;
 			object.y = y;
+
+			this.physics.world.disable(huevo);
 		});
 
 		this.input.on('dragend', function (pointer, object, x, y) {
@@ -107,6 +118,7 @@ function crearHuevo() {
 				console.log("huevera BLANCA");
 			}
 		});
+
 	console.log("huevo creado");
 }
 
