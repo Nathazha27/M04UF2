@@ -33,6 +33,7 @@ let fondo_hierba;
 let huevera_place;
 let huevo_pulsado = .7;
 let huevo_random;
+let huevo;
 
 function precarga()
 {
@@ -60,92 +61,56 @@ function crea()
 	huevera_a.setScale(huevera_scale);
 	huevera_a.setTint(Phaser.Display.Color.GetColor(131,222,255));
 
+	let timer = this.time.addEvent({
+		delay: 500,
+		callback: crearHuevo,
+		callbackScope: crearHuevo,
+		loop: true,
+	})
+}
+
+function crearHuevo() {
+	let x = Phaser.Math.Between(400,canvas_w);
+	huevo = this.add.image(x,0,'huevo');
+	huevo.setScale(huevera_scale);
+
 	huevo_random = Phaser.Math.Between(0,2);
 
 	if (huevo_random == 0){
-		huevoBlanco();
+		huevo.setTint(Phaser.Display.Color.GetColor(255,131,131));
 	}
 	else if (huevo_random == 1){
-		huevoRojo();
+		huevo.setTint(Phaser.Display.Color.GetColor(131,222,255));
 	}
-	else {
-		huevoAzul();
-	}
+		
+	huevo.setInteractive({draggable:true});
+		huevo.on('pointerdown', function () {
+			console.log("pulsado");
+
+			this.setScale(huevo_pulsado);
+		});
+
+		this.input.on('drag', function (pointer, object, x, y) {
+			object.x = x;
+			object.y = y;
+		});
+
+		this.input.on('dragend', function (pointer, object, x, y) {
+			object.setScale(huevera_scale);
+			if (huevo_random == 0 && Phaser.Geom.Intersects.RectangleToRectangle(huevera_r.getBounds(), object.getBounds())){
+				console.log("huevera ROJA");
+			}
+			else if (huevo_random == 1 && Phaser.Geom.Intersects.RectangleToRectangle(huevera_a.getBounds(), object.getBounds())){
+				console.log("huevera AZUL");
+			}
+			else if (huevo_random == 2 && Phaser.Geom.Intersects.RectangleToRectangle(huevera_b.getBounds(), object.getBounds())){
+				console.log("huevera BLANCA");
+			}
+		});
+	console.log("huevo creado");
 }
 
-function huevoBlanco() {
-	let x = Phaser.Math.Between(400,canvas_w);
-	let huevo_b = this.add.image(x,0,'huevo');
-	huevo_b.setScale(huevera_scale);
-		huevo_b.setInteractive({draggable:true});
-			huevo_b.on('pointerdown', function () {
-				console.log("blanco");
 
-				this.setScale(huevo_pulsado);
-			});
-
-			this.input.on('drag', function (pointer, object, x, y) {
-				object.x = x;
-				object.y = y;
-			});
-
-			this.input.on('dragend', function (pointer, object, x, y) {
-				object.setScale(huevera_scale);
-				if (Phaser.Geom.Intersects.RectangleToRectangle(huevera_b.getBounds(), object.getBounds())){
-					console.log("h_blanco");
-				}
-			});
-}
-
-function huevoRojo() {
-	let x = Phaser.Math.Between(400,canvas_w);
-	let huevo_r = this.add.image(x,0,'huevo');
-	huevo_r.setScale(huevera_scale);
-	huevo_r.setTint(Phaser.Display.Color.GetColor(255,131,131));
-		huevo_r.setInteractive({draggable:true});
-			huevo_r.on('pointerdown', function () {
-				console.log("rojo");
-
-				this.setScale(huevo_pulsado);
-			});
-
-			this.input.on('drag', function (pointer, object, x, y) {
-				object.x = x;
-				object.y = y;
-			});
-
-			this.input.on('dragend', function (pointer, object, x, y) {
-				object.setScale(huevera_scale);
-				if (Phaser.Geom.Intersects.RectangleToRectangle(huevera_b.getBounds(), object.getBounds())){
-					console.log("h_rojo");
-				}
-			});
-}
-
-function huevoAzul() {
-	let x = Phaser.Math.Between(400,canvas_w);
-	let huevo_a = this.add.image(x,0,'huevo');
-	huevo_a.setScale(huevera_scale);
-	huevo_a.setTint(Phaser.Display.Color.GetColor(131,222,255));
-		huevo_a.setInteractive({draggable:true});
-			huevo_a.on('pointerdown', function () {
-				console.log("azul");
-
-				this.setScale(huevo_pulsado);
-			});
-
-			this.input.on('drag', function (pointer,object,x,y) {
-				object.x = x;
-				object.y = y;
-			});
-
-			this.input.on('dragend', function (pointer, object, x, y) {
-				object.setScale(huevera_scale);
-				if (Phaser.Geom.Intersects.RectangleToRectangle(huevera_b.getBounds(), object.getBounds())){
-					console.log("h_azul");
-				}
-			});
-}
 
 function actualiza()
 {
