@@ -180,7 +180,7 @@ function endGame() {
         }
         if (h && h.body) {
         h.body.enable = false;
-        h.body.moves = false; // Opcional, por si están cayendo
+        h.body.moves = false;
         }
     });
 
